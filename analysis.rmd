@@ -1,13 +1,26 @@
 ---
 title: "A Cluster Analysis of Employee Information"
 author: "Faisal El Hussein"
-output:
-  github_document:
-    toc: true
-    toc_depth: 2
+output: html_notebook
 ---
 
-# 1. Introduction
+# Table of Contents
+
+[1. Introduction](#s1)
+
+* [1.1 Overview](#s1.1)
+
+[2. Initial Analysis](#s2)
+
+* [2.1 Employee Metrics](#s2.1)
+
+* [2.2 K-Means Clustering](#s2.2)
+
+[3. Cluster Analysis](#s3)
+
+[4. Conclusion](#s4)
+
+# 1. Introduction {#s1}
 
 Employee retention has become a prominent issue in the past several years. [[1](https://www.linkedin.com/pulse/20130816200159-131079-employee-retention-now-a-big-issue-why-the-tide-has-turned)] The spotlight is often put on millenials, and for good reason. A survey conducted by Deloitte in 2016 has found that 66% of millenials expect to leave their employer within five years. [[2](https://www2.deloitte.com/content/dam/Deloitte/global/Documents/About-Deloitte/gx-millenial-survey-2016-exec-summary.pdf)] However, employees of all ages leave for many reasons, some of which may be specific to their employer. Therefore, it may be useful to consider these cases by company!
 
@@ -21,7 +34,7 @@ We'll be using R. Let's start by importing the dataset:
 hr <- read.csv("HR_comma_sep.csv")
 ```
 
-## 1.1 Overview
+## 1.1 Overview {#s1.1}
 
 R's `summary()` function compiles a list of descriptive statistics about the data. This is a great start because it gives us an idea of what we're working with:
 
@@ -56,7 +69,7 @@ any(is.na(hr))
 
 There are 14,999 observations and no missing values. 
 
-# 2. Initial Analysis
+# 2. Initial Analysis {#s2}
 
 We'll import `ggplot2` for our visualizations:
 
@@ -64,7 +77,7 @@ We'll import `ggplot2` for our visualizations:
 library("ggplot2")
 ```
 
-## 2.1 Employee Metrics
+## 2.1 Employee Metrics {#s2.1}
 
 The workplace would be a lot less bitter if people [quit their job](https://www.youtube.com/watch?time_continue=78&v=oqtaNPOitlw) with no hard feelings. Unfortunately, employees leave simply because *someone's* not happy; either them, or their employer - think level of performance. Luckily, `satisfaction_level` and `last_evaluation` capture just that. Visualizing these two attributes may reveal some patterns:
 
@@ -80,7 +93,7 @@ ggplot(hr) +
 
 The scatter plot above shows three distinct clusters for those that left. More specifically, each cluster will give insight as to why those employees left - prompting further analysis! However, to analyze these clusters, they must be isolated from the rest of the observations.
 
-## 2.2 k-Means Clustering
+## 2.2 k-Means Clustering {#s2.2}
 
 k-Means Clustering is a classification algorithm for partitioning observations into a set of clusters - *k* clusters, in which you define *k*. The alogrithm begins by randomly initializing *k* points, called *centroids*. Each observation is then assigned to the closest centroid, in terms of euclidean distance. Afterwards, the average of each cluster is calculated, and *that* average becomes the cluster's new centroid. The observations are reassigned to the closest centroid (remember, the old centroids were replaced by the average points), and the process repeats until the average calculated is close to the current centroid. [[3](https://en.wikipedia.org/wiki/K-means_clustering)]
 
@@ -188,7 +201,7 @@ ggplot(hr.left) +
 
 This is much better, and captures the observations that are just outside the clusters.
 
-# 3. Cluster Analysis
+# 3. Cluster Analysis {#s3}
 
 We can now proceed to cluster analysis. When looking at the clusters, I can't help but think of departments. There are many characteristics associated with certain positions: Long hours, low salary, high salary, lax responsibilites, etc. Curiousity says to look at the department distribution:
 
@@ -282,7 +295,7 @@ What's great is that we've gathered enough information to explain this chart. Cl
 
 Employees in cluster 1 call it quits after four years, and cluster 2 stay longer. Cluster 2, although greatly statisfied with their jobs, may have moved on to better opportunities.
 
-# 4. Conclusion
+# 4. Conclusion {#s4}
 
 **Cluster 1:**
 
